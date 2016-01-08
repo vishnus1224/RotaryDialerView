@@ -7,4 +7,4 @@ The project is currenlty under development. More features will be added along th
 
 ##Demo
 
-![](https://github.com/vishnus1224/SnakeProgressView/blob/master/Project/demo/demo.gif)
+![](https://github.com/vishnus1224/RotaryDialerView/blob/develop/RotaryDialerDemo/demo/demo.gif)
