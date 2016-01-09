@@ -10,9 +10,9 @@ The project is currenlty under development. More features will be added along th
 ![](https://github.com/vishnus1224/RotaryDialerView/blob/master/RotaryDialerDemo/demo/demo.gif)
 
 ##TODO
--Allow bitmap to be specified for the dialer background.
--Allow bitmap to be specified for the cover background.
--Allow bitmap to be specified for the center of the dialer.
--Allow bitmap to be specified for the dialer number.
--Allow bitmap to be specified for the finger stopper.
+-Allow bitmap to be specified for the dialer background.   
+-Allow bitmap to be specified for the cover background.   
+-Allow bitmap to be specified for the center of the dialer.   
+-Allow bitmap to be specified for the dialer number.   
+-Allow bitmap to be specified for the finger stopper.   
 -Reset dialer when user tries to use multiple fingers to dial a number.
