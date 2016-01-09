@@ -15,4 +15,5 @@ The project is currenlty under development. More features will be added along th
 -Allow bitmap to be specified for the center of the dialer.   
 -Allow bitmap to be specified for the dialer number.   
 -Allow bitmap to be specified for the finger stopper.   
--Reset dialer when user tries to use multiple fingers to dial a number.
+-Reset dialer when user tries to use multiple fingers to dial a number.   
+-Find a better icon for the finger stopper.
