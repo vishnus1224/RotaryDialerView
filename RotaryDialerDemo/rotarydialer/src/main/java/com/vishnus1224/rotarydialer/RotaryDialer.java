@@ -234,7 +234,7 @@ public class RotaryDialer extends View implements View.OnTouchListener {
         numberBackgroundColor = typedArray.getColor(R.styleable.RotaryDialer_numberBackgroundColor, numberBackgroundColor);
 
         numberTextColor = typedArray.getColor(R.styleable.RotaryDialer_numberTextColor, numberTextColor);
-        
+
         stopperImageResource = typedArray.getResourceId(R.styleable.RotaryDialer_stopperImage, 0);
 
         typedArray.recycle();
@@ -245,7 +245,7 @@ public class RotaryDialer extends View implements View.OnTouchListener {
         backgroundPaint = new Paint();
         backgroundPaint.setAntiAlias(true);
         backgroundPaint.setStyle(Paint.Style.FILL);
-        backgroundPaint.setColor(Color.RED);
+        backgroundPaint.setColor(dialerBackgroundColor);
     }
 
     private void initNumbers(){
