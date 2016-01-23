@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="RotaryDialer">
+        <!-- Background image for the dialer-->
+        <attr name="dialerBackgroundImage" format="reference"/>
+        <!-- Background color for the dialer-->
+        <attr name="dialerBackgroundColor" format="color|reference"/>
+        <!-- Image for the dialer cover -->
+        <attr name="coverImage" format="reference"/>
+        <!-- Color for the dialer cover-->
+        <attr name="coverColor" format="color|reference"/>
+        <!-- Background image for the numbers on the dialer-->
+        <attr name="numberBackgroundImage" format="reference"/>
+        <!-- Background color for the numbers on the dialer-->
+        <attr name="numberBackgroundColor" format="color|reference"/>
+        <!-- Text color to be used for displaying the number-->
+        <attr name="numberTextColor" format="color|reference"/>
+        <!-- Image for the finger stop-->
+        <attr name="stopperImage" format="reference"/>
+    </declare-styleable>
+</resources>
