@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -76,6 +77,117 @@ public class RotaryDialer extends View implements View.OnTouchListener {
      */
     private boolean animationInProgress = false;
 
+
+    /**
+     * ================================
+     * Customizable attributes
+     * ===============================
+     */
+
+    /**
+     * Resource ID specified in xml for the image to be used as the background for the dialer
+     */
+    private int dialerBackgroundImageResource;
+
+    /**
+     *  Uses the color to draw the background if the image is not specified.
+     */
+    private int dialerBackgroundColor = Color.RED;
+
+    /**
+     * Resource ID for the cover image.
+     */
+    private int coverImageResource;
+
+    /**
+     * Color to be used for drawing the cover if no image is specified.
+     */
+    private int coverColor = Color.GREEN;
+
+    /**
+     * Resource ID for the background of the number on the dialer.
+     */
+    private int numberBackgroundImageResource;
+
+    /**
+     * Color for the number background in case image is not provided.
+     */
+    private int numberBackgroundColor = Color.GRAY;
+
+    /**
+     * Color to be used for drawing the number.
+     */
+    private int numberTextColor = Color.GREEN;
+
+    /**
+     * Resource ID to be used for drawing the finger stop i.e. lever.
+     */
+    private int stopperImageResource;
+
+    public int getStopperImageResource() {
+        return stopperImageResource;
+    }
+
+    public void setStopperImageResource(int stopperImageResource) {
+        this.stopperImageResource = stopperImageResource;
+    }
+
+    public int getNumberTextColor() {
+        return numberTextColor;
+    }
+
+    public void setNumberTextColor(int numberTextColor) {
+        this.numberTextColor = numberTextColor;
+    }
+
+    public int getNumberBackgroundColor() {
+        return numberBackgroundColor;
+    }
+
+    public void setNumberBackgroundColor(int numberBackgroundColor) {
+        this.numberBackgroundColor = numberBackgroundColor;
+    }
+
+    public int getNumberBackgroundImageResource() {
+        return numberBackgroundImageResource;
+    }
+
+    public void setNumberBackgroundImageResource(int numberBackgroundImageResource) {
+        this.numberBackgroundImageResource = numberBackgroundImageResource;
+    }
+
+    public int getCoverColor() {
+        return coverColor;
+    }
+
+    public void setCoverColor(int coverColor) {
+        this.coverColor = coverColor;
+    }
+
+    public int getCoverImageResource() {
+        return coverImageResource;
+    }
+
+    public void setCoverImageResource(int coverImageResource) {
+        this.coverImageResource = coverImageResource;
+    }
+
+    public int getDialerBackgroundColor() {
+        return dialerBackgroundColor;
+    }
+
+    public void setDialerBackgroundColor(int dialerBackgroundColor) {
+        this.dialerBackgroundColor = dialerBackgroundColor;
+    }
+
+    public int getDialerBackgroundImageResource() {
+        return dialerBackgroundImageResource;
+    }
+
+    public void setDialerBackgroundImageResource(int dialerBackgroundImageResource) {
+        this.dialerBackgroundImageResource = dialerBackgroundImageResource;
+    }
+
     public RotaryDialer(Context context) {
         super(context);
         initPaints();
@@ -93,6 +205,9 @@ public class RotaryDialer extends View implements View.OnTouchListener {
 
     public RotaryDialer(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+
+        obtainAttributes(context, attrs, defStyleAttr);
+
         initPaints();
         initNumbers();
         initCover();
@@ -100,6 +215,29 @@ public class RotaryDialer extends View implements View.OnTouchListener {
         initAnimator();
         setClickable(true);
         setOnTouchListener(this);
+    }
+
+    private void obtainAttributes(Context context, AttributeSet attrs, int defStyleAttr) {
+
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.RotaryDialer, defStyleAttr, 0);
+
+        dialerBackgroundImageResource = typedArray.getResourceId(R.styleable.RotaryDialer_dialerBackgroundImage, 0);
+
+        dialerBackgroundColor = typedArray.getColor(R.styleable.RotaryDialer_dialerBackgroundColor, dialerBackgroundColor);
+
+        coverImageResource = typedArray.getResourceId(R.styleable.RotaryDialer_coverImage, 0);
+
+        coverColor = typedArray.getColor(R.styleable.RotaryDialer_coverColor, coverColor);
+
+        numberBackgroundImageResource = typedArray.getResourceId(R.styleable.RotaryDialer_numberBackgroundImage, 0);
+
+        numberBackgroundColor = typedArray.getColor(R.styleable.RotaryDialer_numberBackgroundColor, numberBackgroundColor);
+
+        numberTextColor = typedArray.getColor(R.styleable.RotaryDialer_numberTextColor, numberTextColor);
+        
+        stopperImageResource = typedArray.getResourceId(R.styleable.RotaryDialer_stopperImage, 0);
+
+        typedArray.recycle();
     }
 
     private void initPaints() {
