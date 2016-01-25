@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="RotaryDialer">
+        <!-- radius of the dialer-->
+        <attr name="dialerRadius" format="integer|dimension"/>
         <!-- Background image for the dialer-->
         <attr name="dialerBackgroundImage" format="reference"/>
         <!-- Background color for the dialer-->
