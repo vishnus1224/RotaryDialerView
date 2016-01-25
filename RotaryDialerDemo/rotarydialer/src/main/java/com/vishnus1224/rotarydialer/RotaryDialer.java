@@ -5,6 +5,8 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -47,9 +49,9 @@ public class RotaryDialer extends View implements View.OnTouchListener {
     private int dialerHeight;
 
     /**
-     * Radius of the view.
+     * Radius of the view. Specifies how big the view should be. Default radius of 250.
      */
-    private float dialerRadius;
+    private float dialerRadius = 250;
 
     /**
      * The number that the user has currently touched.
@@ -123,6 +125,8 @@ public class RotaryDialer extends View implements View.OnTouchListener {
      * Resource ID to be used for drawing the finger stop i.e. lever.
      */
     private int stopperImageResource;
+
+    private Bitmap dialerBackgroundBitmap;
 
     public int getStopperImageResource() {
         return stopperImageResource;
@@ -208,7 +212,7 @@ public class RotaryDialer extends View implements View.OnTouchListener {
 
         obtainAttributes(context, attrs, defStyleAttr);
 
-        initPaints();
+        initDialer();
         initNumbers();
         initCover();
         initLever();
@@ -220,6 +224,8 @@ public class RotaryDialer extends View implements View.OnTouchListener {
     private void obtainAttributes(Context context, AttributeSet attrs, int defStyleAttr) {
 
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.RotaryDialer, defStyleAttr, 0);
+
+        dialerRadius = typedArray.getDimension(R.styleable.RotaryDialer_dialerRadius, dialerRadius);
 
         dialerBackgroundImageResource = typedArray.getResourceId(R.styleable.RotaryDialer_dialerBackgroundImage, 0);
 
@@ -239,6 +245,23 @@ public class RotaryDialer extends View implements View.OnTouchListener {
 
         typedArray.recycle();
     }
+
+    //create a bitmap if a resource id is specified.
+    private void initDialer() {
+
+        if(dialerBackgroundImageResource != 0){
+            Bitmap dialerBackground = BitmapFactory.decodeResource(getResources(), dialerBackgroundImageResource);
+
+            dialerBackgroundBitmap = Bitmap.createScaledBitmap(dialerBackground, (int) dialerRadius, (int) dialerRadius, true);
+
+            dialerBackground.recycle();
+            dialerBackground = null;
+        }else{
+            initPaints();
+        }
+
+    }
+
 
     private void initPaints() {
 
@@ -264,10 +287,7 @@ public class RotaryDialer extends View implements View.OnTouchListener {
 
         DialerNumber dialerNumber = new DialerNumber(getContext());
         dialerNumber.setCenter(new Point(0, 0));
-        dialerNumber.setCircleRadius(20f);
-
-        boolean value = Util.pointLiesInCircle(19, 19, dialerNumber);
-        Log.d("point in the circle", "is " + value);
+        dialerNumber.setCircleRadius(dialerRadius / 6f);
     }
 
     private void initLever(){
@@ -309,9 +329,15 @@ public class RotaryDialer extends View implements View.OnTouchListener {
         dialerHeight = getHeight();
 
         //set the radius to the minimum dimension.
-        dialerRadius = dialerWidth > dialerHeight ? dialerHeight * 0.5f : dialerWidth * 0.5f;
+        //dialerRadius = dialerWidth > dialerHeight ? dialerHeight * 0.5f : dialerWidth * 0.5f;
 
-        canvas.drawCircle(dialerWidth * 0.5f, dialerHeight * 0.5f, dialerRadius, backgroundPaint);
+        float centerX = dialerWidth * 0.5f;
+        float centerY = dialerHeight * 0.5f;
+
+        float left = centerX - (dialerRadius * 0.5f);
+        float top = centerY - (dialerRadius * 0.5f);
+
+        drawBackground(canvas, left, top, centerX, centerY);
 
         drawNumbers(canvas);
 
@@ -321,6 +347,20 @@ public class RotaryDialer extends View implements View.OnTouchListener {
 
     }
 
+    private void drawBackground(Canvas canvas, float left, float top, float centerX, float centerY) {
+
+        //draw the bitmap if it is set, else draw the color.
+        if(dialerBackgroundBitmap != null) {
+
+            canvas.drawBitmap(dialerBackgroundBitmap, left, top, null);
+
+        }else{
+
+            canvas.drawCircle(centerX, centerY, dialerRadius, backgroundPaint);
+
+        }
+    }
+
     private void drawNumbers(Canvas canvas) {
 
         float angle = 90f;
@@ -328,11 +368,11 @@ public class RotaryDialer extends View implements View.OnTouchListener {
         // TODO: 12/8/2015 change 270 and use Math.PI class.
         float stepSize = (270f / TOTAL_NUMBERS_ON_THE_DIALER);
 
-        int minimumDimension = Math.min(dialerWidth, dialerHeight);
+//        int minimumDimension = Math.min(dialerWidth, dialerHeight);
 
-        float distanceFromCentre = minimumDimension / 2.5f;
+        float distanceFromCentre = dialerRadius / 1.3f;
 
-        innerRadius = distanceFromCentre - (minimumDimension / 12f);
+        innerRadius = distanceFromCentre - (dialerRadius / 12f);
 
         for (int i = 0; i < TOTAL_NUMBERS_ON_THE_DIALER; i++) {
 
@@ -342,7 +382,7 @@ public class RotaryDialer extends View implements View.OnTouchListener {
             int y = (int) (dialerHeight * 0.5f + (distanceFromCentre * Math.sin(Math.toRadians(angle))));
 
             dialerNumber.setCenter(new Point(x, y));
-            dialerNumber.setCircleRadius(minimumDimension / 12);
+            dialerNumber.setCircleRadius(dialerRadius / 6f);
             dialerNumber.draw(canvas);
 
             angle += stepSize;
