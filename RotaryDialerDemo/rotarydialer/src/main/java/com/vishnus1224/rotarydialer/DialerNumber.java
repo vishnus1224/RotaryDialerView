@@ -21,7 +21,7 @@ class DialerNumber extends View{
 
     private float circleRadius;
 
-    private static final int NUMBER_TEXT_SIZE = 40;
+    private int numberTextSize = 40;
 
     public DialerNumber(Context context) {
         super(context);
@@ -59,12 +59,13 @@ class DialerNumber extends View{
 
     public void setCircleRadius(float circleRadius) {
         this.circleRadius = circleRadius;
+        this.numberTextSize = (int) circleRadius;
     }
 
     private void initPaint(){
 
         textPaint = new Paint();
-        textPaint.setTextSize(NUMBER_TEXT_SIZE);
+        textPaint.setTextSize(numberTextSize);
         textPaint.setTextAlign(Paint.Align.CENTER);
         textPaint.setAntiAlias(true);
         textPaint.setColor(Color.GREEN);
@@ -83,7 +84,7 @@ class DialerNumber extends View{
 
         // TODO: 12/3/2015 setter for typeface and font size.
         //draw the number on screen.
-        canvas.drawText(String.valueOf(position), center.x, center.y + (NUMBER_TEXT_SIZE / 2), textPaint);
+        canvas.drawText(String.valueOf(position), center.x, center.y + (numberTextSize / 2), textPaint);
 
     }
     
